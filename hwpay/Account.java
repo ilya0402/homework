@@ -2,6 +2,7 @@ package hwpay;
 
 public abstract class Account {
     protected long balance;
+
     public boolean add(long amount) {
         if (amount > 0) {
             balance += amount;
@@ -11,10 +12,17 @@ public abstract class Account {
     }
 
     public boolean transfer(Account account, long amount) {
-        if (pay(amount)) {
-            return account.add(amount);
+        if (amount <= 0) {
+            return false;
         }
-        return false;
+        if (!pay(amount)) {
+            return false;
+        }
+        if (!account.add(amount)) {
+            add(amount);
+            return false;
+        }
+        return true;
     }
 
     public long getBalance() {

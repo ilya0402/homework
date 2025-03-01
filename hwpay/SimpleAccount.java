@@ -3,10 +3,13 @@ package hwpay;
 public class SimpleAccount extends Account {
     @Override
     public boolean pay(long amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-            return true;
+        if (amount <= 0) {
+            return false;
         }
-        return false;
+        if (amount > balance) {
+            return false;
+        }
+        balance -= amount;
+        return true;
     }
 }
